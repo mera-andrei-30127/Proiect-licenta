@@ -1,0 +1,82 @@
+﻿@model WebApplicationForDidacticPurpose.MODELS.RegisterAndLoginModels.RegisterUserEntity
+
+
+@{ ViewData["Title"] = "Home Page"; }
+
+
+<div class="d-flex flex-column align-items-center justify-content-center text-center my-5">
+    <h1 class="p-2 m-2 login-header">EasySchool</h1>
+    <p class="p-1 m-2 w-75">A place where you can manage your attendees.</p>
+</div>
+
+@{var Groups = Enum.GetNames(typeof(WebApplicationForDidacticPurpose.DAL.Models.GroupType));}
+<section class="container-fluid d-flex align-items-center justify-content-center">
+    <div class="row d-flex flex-md-row flex-column align-items-center justify-content-center">
+
+        <div class="col-6 order-md-1 order-2 p-3">
+            <div class="text-center">
+                <img src="~/images/home-page-image.svg" class="rounded img-fluid mx-auto d-block" height="500" width="500" alt="..." />
+            </div>
+        </div>
+
+        <div class="col-6 order-1 p-3">
+            <form asp-action="Register" method="post">
+                @*@Html.ValidationSummary()*@
+
+                <div asp-validation-for="FirstName" class="form-floating mb-3">
+                    <input asp-for="FirstName" class="form-control" placeholder="FirstName" />
+                    <label asp-for="FirstName">First Name</label>
+                    <span class="text-danger">@Html.ValidationMessageFor(a => a.FirstName)</span>
+                </div>
+                <div asp-validation-for="LastName" class="form-floating mb-3">
+                    <input asp-for="LastName" class="form-control" placeholder="LastName" />
+                    <label asp-for="LastName">Last Name</label>
+                    <span class="text-danger">@Html.ValidationMessageFor(a => a.LastName)</span>
+                </div>
+                <div asp-validation-for="Email" class="form-floating mb-3">
+                    <input type="email" asp-for="Email" class="form-control" placeholder="Email" />
+                    <label asp-for="Email"></label>
+                    <span class="text-danger">@Html.ValidationMessageFor(a => a.Email)</span>
+                </div>
+                <div asp-validation-for="RepositoryLink" class="form-floating mb-3">
+                    <input type="url" asp-for="RepositoryLink" class="form-control" placeholder="RepositoryLink" />
+                    <label asp-for="RepositoryLink"></label>
+                    <span class="text-danger">@Html.ValidationMessageFor(a => a.RepositoryLink)</span>
+
+                </div>
+                <div asp-validation-for="Password" class="form-floating mb-3">
+                    <input type="password" asp-for="Password" class="form-control" placeholder="Password" />
+                    <label asp-for="Password"></label>
+                    <span class="text-danger">@Html.ValidationMessageFor(a => a.Password)</span>
+
+                </div>
+
+                <div asp-validation-for="Group" class="form-floating mb-3">
+                    <select asp-for="Group" class="form-select" id="floatingSelectGrid">
+                        @foreach (var group in Groups)
+                        {
+            <option value="@group">@group</option>}
+
+                    </select>
+                    <label asp-for="Group" for="floatingSelect">Select group</label>
+                </div>
+
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary form-control">Register</button>
+                    </div>
+                    <div class="col">
+                        <a asp-action="Login" class="btn btn-secondary form-control">Back to Login</a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+    </div>
+</section>
+

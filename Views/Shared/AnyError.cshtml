@@ -1,0 +1,24 @@
+﻿@model WebApplicationForDidacticPurpose.MODELS.ViewModels.ErrorMessageViewModel
+
+@{ ViewData["Title"] = "Home Page"; }
+
+<section class="container-fluid d-flex align-items-center justify-content-center mt-5">
+    <div class="row d-flex flex-md-row flex-column align-items-center justify-content-center">
+
+        <div class="col-6 order-first p-3">
+            <div class="text-center">
+                @if (@Model.Type == WebApplicationForDidacticPurpose.MODELS.ViewModels.ErrorType.RequestProcessingError)
+                {
+    <img src="~/images/error-processing-request-image.svg" class="rounded img-fluid mx-auto d-block" height="500" width="500" alt="..." /> }
+                else if (@Model.Type == WebApplicationForDidacticPurpose.MODELS.ViewModels.ErrorType.NotFoundError)
+                {
+    <img src="~/images/error-not-found-image.svg" class="rounded img-fluid mx-auto d-block" height="500" width="500" alt="..." />}
+            </div>
+        </div>
+
+        <div class="col-6 order-last p-3">
+            <h1>Error.</h1>
+            <h2>@Model.Message</h2>
+        </div>
+    </div>
+</section>

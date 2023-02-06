@@ -1,0 +1,35 @@
+﻿@model WebApplicationForDidacticPurpose.DAL.Models.HomeworkEntity
+
+
+@{ ViewData["Title"] = "Details"; }
+
+<div class="text-center mb-3">
+    <h1 class="my-5">@Model.Name - Homework</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div id="homework-info" class="col-4">
+                <ul class="list-group">
+                    <li class="list-group-item"><b>Homework: </b>@Html.DisplayFor(model => model.Name)</li>
+                    @*<li class="list-group-item"><b>Trainer: </b>@Html.DisplayFor(model => model.Trainer.NormalizedUserName)</li>*@
+                    <li class="list-group-item"><b>Deadline:</b> @Model.Deadline.ToString("dd/MM/yyyy")</li>
+                </ul>
+
+                <div id="buttons">
+                    <div class="row mt-2 mx-0 p-0">
+                        <div class="col">
+                            <a asp-action="Index" role="button" class="btn btn-secondary form-control">Return to list</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="homework-description" class="col-8">
+                
+                <div><b>Description:</b></div>
+                <div>@Html.DisplayFor(model => model.Description)</div>
+            </div>
+        </div>
+    </div>
+</div>

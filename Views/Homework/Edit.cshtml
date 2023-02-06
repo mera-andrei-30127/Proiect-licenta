@@ -1,0 +1,46 @@
+﻿@model WebApplicationForDidacticPurpose.DAL.Models.HomeworkEntity
+    @{
+    ViewData["Title"] = "Edit";
+    }
+
+    <div class="text-center mb-3">
+        <h1 class="my-5">Edit @Model.Name Homework</h1>
+    </div>
+
+    <section class="d-flex flex-column align-items-center justify-content-center my-5">
+        <form asp-action="Edit" class="form-width-percent">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="HomeworkId" />
+
+            <div class="form-floating mb-3">
+                <textarea asp-for="Description" id="homework-description" class="form-control" rows="3" placeholder="Homework description..."></textarea>
+                <label asp-for="Description" for="homework-description">Homework description...</label>
+                <span class="text-danger">@Html.ValidationMessageFor(a => a.Description)</span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Deadline" id="homework-deadline" class="form-control" placeholder="Deadline">
+                <label asp-for="Deadline" for="homework-deadline">Deadline</label>
+                <span class="text-danger">@Html.ValidationMessageFor(a => a.Deadline)</span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="RepozitoryLink" id="homework-repositoryLink" class="form-control" placeholder="RepositoryLink">
+                <label asp-for="RepozitoryLink" for="homework-repositoryLink">RepositoryLink</label>
+                <span class="text-danger">@Html.ValidationMessageFor(a => a.RepozitoryLink)</span>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary form-control">Save Changes</button>
+                </div>
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-secondary form-control">Return to list</a>
+                </div>
+            </div>
+
+        </form>
+
+    </section>
+
+    @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

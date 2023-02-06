@@ -1,0 +1,52 @@
+﻿@model WebApplicationForDidacticPurpose.MODELS.ViewModels.Attendee.AttendeeSimilaritiesViewModel
+@using WebApplicationForDidacticPurpose.BL.Interfaces
+
+@inject IGitHubService githubService
+@inject IAttendeeService attendeeService
+@inject IHomeworkService homeworkService
+
+@{ ViewData["Title"] = "Code Preview";
+    var attendee1 = attendeeService.GetAttendeeById(Model.AttendeeId_1);
+    var attendee2 = attendeeService.GetAttendeeById(Model.AttendeeId_2);
+    var homework = homeworkService.GetHomeworkById(Model.HomeworkId);
+    var file1 = githubService.ReturnFilesToBeCompared(homework.Name, attendee1.Email).Item2;
+    var file2 = githubService.ReturnFilesToBeCompared(homework.Name, attendee2.Email).Item2;}
+<div class="card">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card-body">
+                <h5 class="card-title">@attendee1.FirstName @attendee1.LastName code:</h5>
+                <textarea id="homework-description" class="form-control" rows="5">
+                @foreach (var line in file1)
+                {
+
+                    @line
+                }
+</textarea>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card-body">
+                <h5 class="card-title">@attendee2.FirstName @attendee2.LastName code:</h5>
+                <textarea id="homework-description" class="form-control" rows="5">
+                @foreach (var line in file2)
+                {
+
+                    @line
+                }
+</textarea>
+
+            </div>
+        </div>
+    </div>
+        <div id="button">
+            <div class="row mt-2 mx-0 p-0">
+                <div class="col-sm-3">
+                    <a asp-action="Similarities" asp-route-attendeeId="@Model.AttendeeId_1" role="button" class="btn btn-secondary form-control">Back</a>
+                </div>
+            </div>
+        </div>
+   
+</div>
+
+

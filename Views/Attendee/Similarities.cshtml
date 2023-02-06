@@ -1,0 +1,107 @@
+﻿@model WebApplicationForDidacticPurpose.MODELS.ViewModels.Attendee.AttendeeSimilaritiesViewModel
+@using WebApplicationForDidacticPurpose.BL.Interfaces
+
+@inject IAttendeeHomeworksService attendeeHomeworkService
+@inject IHomeworkService homeworkService
+@inject IAttendeeService attendeeService
+
+@{ ViewData["Title"] = "Similarities";
+    var homeworks = homeworkService.GetAllHomeworks();
+    var attendee_1 = attendeeService.GetAttendeeById(Model.AttendeeId_1); }
+
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <h1>Similarities</h1>
+        </div>
+        <div class="col-6 text-center">
+            <img src="~/images/trainings.svg" class="rounded img-fluid mx-auto d-block" height="350" width="350" alt="..." />
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div id="homework-info" class="col-4">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Attendee First Name: </b>@attendee_1.FirstName</li>
+                <li class="list-group-item"><b>Attendee Last Name: </b>@attendee_1.LastName</li>
+            </ul>
+
+            <div id="buttons">
+                <div class="row mt-2 mx-0 p-0">
+                    <div class="col">
+                        <a asp-action="Index" role="button" class="btn btn-secondary form-control">Return to list</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div id="item2" class="accordion">
+            @foreach (var homework in homeworks)
+            {
+<div class="accordion-item">
+    <h2 class="accordion-header" id="panelsStayOpen-@homework.HomeworkId-@homework.HomeworkId">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-@homework.HomeworkId" aria-expanded="false" aria-controls="panelsStayOpen-@homework.HomeworkId">
+            <span>
+                <b>Homework name: @homework.Name</b>
+            </span>
+        </button>
+    </h2>
+    <div id="panelsStayOpen-@homework.HomeworkId" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-@homework.HomeworkId-@homework.HomeworkId">
+        @if (attendeeHomeworkService.CheckIfAttendeeIdHasSimilarity(Model.AttendeeId_1))
+        {<table class="table">
+                <tr>
+                    <th>Similaritiy With(First Name)</th>
+                    <th>Similaritiy With(Last Name)</th>
+                    <th>Similaritiy Procent</th>
+                    <th>Code Preview</th>
+                </tr>
+
+                @{var attendeeHomeworks = attendeeHomeworkService.ReturnEntitiesById(Model.AttendeeId_1, homework.HomeworkId);}
+                @if (attendeeHomeworks.Count() > 0)
+                {
+                    foreach (var entity in attendeeHomeworks)
+                    {
+                        var attendee_2 = attendeeService.GetAttendeeById(entity.AttendeeIdThatCopyWith);
+<tr>
+    <td>
+        @attendee_2.FirstName
+    </td>
+    <td>
+        @attendee_2.LastName
+    </td>
+    <td>
+        @entity.SimilarityProcent%
+    </td>
+    <td>
+        <a asp-action="CodePreview" asp-route-attendeeId_1="@Model.AttendeeId_1" asp-route-attendeeId_2="@attendee_2.AttendeeId" asp-route-homeworkId="@entity.HomeworkId" class="lock text-dark me-2" title="CodePreview">
+            <i class="bi bi-info-circle icon-unlock"></i>
+            <i class="bi bi-info-circle-fill icon-lock"></i>
+        </a>
+    </td>
+</tr>
+}
+}
+
+            </table>}
+        else
+        {
+
+<div class="accordion-body">
+    <div>
+        No similarities found.
+    </div>
+</div>}
+
+    </div>
+</div>}
+
+
+        </div>
+    </div>
+</div>

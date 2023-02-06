@@ -1,0 +1,48 @@
+﻿@model WebApplicationForDidacticPurpose.DAL.Models.AttendeeEntity
+
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<div class="text-center mb-3">
+    <h1 class="my-5">@Model.FirstName @Model.LastName Account</h1>
+</div>
+
+@{var Groups = Enum.GetNames(typeof(WebApplicationForDidacticPurpose.DAL.Models.GroupType));}
+<section class="d-flex flex-column align-items-center justify-content-center my-5">
+    <form asp-action="MyAccount" class="form-width-percent">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="AttendeeId" />
+     
+        <div asp-validation-for="Group" class="form-floating mb-3">
+            <select asp-for="Group" class="form-select" id="floatingSelectGrid">
+                @foreach (var group in Groups)
+                {
+                    <option value="@group">@group</option>
+                }
+
+            </select>
+            <label asp-for="Group" for="floatingSelect">Select group</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="RepozitoryLink" id="homework-repositoryLink" class="form-control" placeholder="RepositoryLink">
+            <label asp-for="RepozitoryLink" for="homework-repositoryLink">RepositoryLink</label>
+            <span class="text-danger">@Html.ValidationMessageFor(a => a.RepozitoryLink)</span>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary form-control">Save Changes</button>
+            </div>
+            <div class="col">
+                <a asp-action="PasswordChange" asp-route-attendeeId="@Model.AttendeeId" class="btn btn-secondary form-control">Change Password</a>
+            </div>
+        </div>
+
+    </form>
+
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

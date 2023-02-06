@@ -1,0 +1,55 @@
+﻿@model WebApplicationForDidacticPurpose.MODELS.ViewModels.Homework.HomeworkViewModel
+
+
+@{ ViewData["Title"] = "Create";}
+
+<div class="text-center mb-3">
+    <h1 class="my-5">Create homework</h1>
+</div>
+
+<hr />
+
+<div class="d-flex justify-content-center row">
+    <div class="col-md-4">
+        <form asp-controller="Homework" asp-action="Create" method="post">
+
+            <div class="form-floating mb-3">
+                <input asp-for="Name" id="homework-name" type="text" class="form-control" placeholder="Homework Name">
+                <label asp-for="Name" for="homework-name">Homework Name</label>
+                <span class="text-danger">@Html.ValidationMessageFor(a => a.Name)</span>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea asp-for="Description" id="homework-description" class="form-control" rows="3" placeholder="Homework description..."></textarea>
+                <label asp-for="Description" for="homework-description">Homework description...</label>
+                <span class="text-danger">@Html.ValidationMessageFor(a => a.Description)</span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="RepozitoryLink" id="homework-repositoryLink" type="url" class="form-control" placeholder="Repository link">
+                <label asp-for="RepozitoryLink" for="homework-repositoryLink">Repository link</label>
+                <span class="text-danger">@Html.ValidationMessageFor(a => a.RepozitoryLink)</span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Deadline" id="homework-Deadline" class="form-control" placeholder="Deadline">
+                <label asp-for="Deadline" for="homework-repozitoryLink">Deadline</label>
+                <span class="text-danger">@Html.ValidationMessageFor(a => a.Deadline)</span>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col">
+                    <input class="btn btn-primary form-control" type="submit" value="Create">
+                </div>
+                <div class="col">
+                    <a class="btn btn-secondary form-control" asp-action="Index" role="button">Back to list</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

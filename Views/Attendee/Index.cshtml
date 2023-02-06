@@ -1,0 +1,115 @@
+﻿@model WebApplicationForDidacticPurpose.MODELS.ViewModels.AttendeeHomework.AttendeeHomeworksViewModel
+@using WebApplicationForDidacticPurpose.BL.Interfaces
+
+@inject IAttendeeHomeworksService attendeeHomeworkService
+
+@{ ViewData["Title"] = "Attendee - Index"; }
+
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <h1>Attendees</h1>
+        </div>
+        <div class="col-6 text-center">
+            <img src="~/images/trainings.svg" class="rounded img-fluid mx-auto d-block" height="350" width="350" alt="..." />
+        </div>
+    </div>
+</div>
+
+
+
+
+<section class="d-flex flex-column align-items-end justify-content-end bg-light p-2 rounded-3">
+
+    <div class="navbar navbar-light bg-light">
+
+        <form class="mt-auto p-2" method="post" enctype="multipart/form-data">
+            <input type="file" name="files" multiple required />
+            <button class="btn btn-success" type="submit" asp-controller="Attendee" asp-action="UploadFileToCreateNewUsers">Upload file</button>
+            @if (ViewBag.Message != null)
+            {
+<div class="alert alert-success alert-dismissible" style="margin-top:20px">
+    @ViewBag.Message
+</div>}
+        </form>
+        @*<ul class="col-md-auto navbar-nav flex-grow-1 order-1">
+                @if (@User.IsInRole("Trainer"))
+                {
+            <li class="nav-item">
+                <a class="btn btn-primary" asp-action="Create" role="button">Create</a>
+            </li>}
+                </ul>
+                <form class="d-flex order-3 order-md-2" asp-action="Index" method="get">
+                    <input class="form-control me-2" type="search" name="searchString" placeholder="Search by name..." value="@ViewData[" CurrentFilter"]" />
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+                <div class="col-md-auto order-2 order-md-3">
+                    <a class="btn btn-secondary m-2" asp-action="Index" role="button">Reset Search</a>
+                </div>*@
+
+    </div>
+</section>
+
+
+@{var Groups = Enum.GetNames(typeof(WebApplicationForDidacticPurpose.DAL.Models.GroupType));}
+
+<div id="item2" class="accordion">
+    @foreach (var groups in Groups)
+    {
+<div class="accordion-item">
+    <h2 class="accordion-header" id="@groups + @groups">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@groups" aria-expanded="false" aria-controls="@groups">
+            <span><b>@groups (@Model.Attendees.Count(a => a.Group.Equals(groups)))</b></span>
+        </button>
+    </h2>
+    <div id="@groups" class="accordion-collapse collapse" aria-labelledby="@groups + @groups">
+        <div class="accordion-body">
+            @if (Model.Attendees.Count(a => a.Group.Equals(groups)) > 0)
+            {
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Repository link</th>
+        <th>Similarities</th>
+    </tr>
+    @{ var counter = 0; }
+    @foreach (var at in Model.Attendees)
+    {
+        if (at.Group.Equals(groups))
+        {
+            counter++;
+<tr>
+    <td>@counter</td>
+    <td>
+        @Html.DisplayFor(modelItem => at.FirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => at.LastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => at.RepozitoryLink)
+    </td>
+    <td>
+        @attendeeHomeworkService.ReturnMaximumPrecentOfSimilarity(at.AttendeeId)%
+        <a asp-action="Similarities" asp-route-attendeeId="@at.AttendeeId" class="lock text-dark me-2" title="Details">
+            <i class="bi bi-info-circle icon-unlock"></i>
+            <i class="bi bi-info-circle-fill icon-lock"></i>
+        </a>
+    </td>
+</tr>
+}
+
+}
+</table> }
+else
+{
+<div>
+    No Attendees assigned yet.
+</div>}
+        </div>
+    </div>
+</div>}
+
+</div>

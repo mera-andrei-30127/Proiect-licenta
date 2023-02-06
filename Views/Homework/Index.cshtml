@@ -1,0 +1,116 @@
+﻿@model WebApplicationForDidacticPurpose.Utility.PaginatedList<WebApplicationForDidacticPurpose.DAL.Models.HomeworkEntity>
+
+
+@{ ViewData["Title"] = "Homework - Index"; }
+
+
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-6 d-flex align-items-center justify-content-center">
+            <h1>Homeworks</h1>
+        </div>
+        <div class="col-6 text-center">
+            <img src="~/images/trainings.svg" class="rounded img-fluid mx-auto d-block" height="350" width="350" alt="..." />
+        </div>
+    </div>
+</div>
+
+<section class="d-flex flex-column align-items-center justify-content-center bg-light p-2 rounded-3">
+
+    <div class="navbar navbar-light bg-light p-2 w-75">
+        <div class="container-fluid d-flex flex-column flex-md-row">
+            <ul class="col-md-auto navbar-nav flex-grow-1 order-1">
+                @if (@User.IsInRole("Trainer"))
+                {
+    <li class="nav-item">
+        <a class="btn btn-primary" asp-action="Create" role="button">Create</a>
+    </li>
+}
+            </ul>
+            <form class="d-flex order-3 order-md-2" asp-action="Index" method="get">
+                <input class="form-control me-2" type="search" name="searchString" placeholder="Search by name..." value="@ViewData["CurrentFilter"]" />
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+            <div class="col-md-auto order-2 order-md-3">
+                <a class="btn btn-secondary m-2" asp-action="Index" role="button">Reset Search</a>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table w-75">
+        <thead>
+            <tr>
+                <th>
+                    Index
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Deadline
+                </th>
+                <th>
+                    RepositoryLink
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                var Deadline = item.Deadline.ToString("dd/MM/yyyy");
+
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Index)
+    </td>
+    <td>
+        <span class="d-inline-block popup" tabindex="0" data-bs-placement="right" data-bs-trigger="hover focus" data-bs-toggle="popover" data-bs-content="@item.Description">
+            <a class="text-dark" asp-action="Details" asp-route-homeworkId="@item.HomeworkId">@Html.DisplayFor(modelItem => item.Name)</a>
+        </span>
+    </td>
+    <td>
+        @Deadline
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RepozitoryLink)
+    </td>
+    @if (@User.IsInRole("Trainer"))
+    {
+<td>
+    <a asp-action="Details" asp-route-homeworkId="@item.HomeworkId" class="lock text-dark me-2" title="Details">
+        <i class="bi bi-info-circle icon-unlock"></i>
+        <i class="bi bi-info-circle-fill icon-lock"></i>
+    </a>
+    <a asp-action="Edit" asp-route-homeworkId="@item.HomeworkId" class="lock text-dark me-2" title="Edit">
+        <i class="bi bi-pencil icon-unlock"></i>
+        <i class="bi bi-pencil-fill icon-lock"></i>
+    </a>
+    <a asp-action="DeleteGet" asp-route-homeworkId="@item.HomeworkId" class="lock text-dark" style="cursor:pointer" title="Delete">
+        <i class="bi bi-trash icon-unlock"></i>
+        <i class="bi bi-trash-fill icon-lock"></i>
+    </a>
+</td>
+ }
+else
+{
+<td>
+    <a asp-action="Details" asp-route-homeworkId="@item.HomeworkId" class="lock text-dark me-2" title="Details">
+        <i class="bi bi-info-circle icon-unlock"></i>
+        <i class="bi bi-info-circle-fill icon-lock"></i>
+    </a>
+</td>
+}
+</tr>
+}
+        </tbody>
+    </table>
+
+    <partial name="_Pagination" />
+
+</section>
