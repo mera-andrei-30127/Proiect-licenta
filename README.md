@@ -9,3 +9,5 @@ The application is an efficient student management system and has the following 
 -the student account can only view assignments in progress and manage their own account
 
 -the application has a login+records module
+
+- all controller operations use API requests
