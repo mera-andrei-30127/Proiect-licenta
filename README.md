@@ -1,16 +1,11 @@
-# Aplicatie cu scop didactic
+# Application for teaching purposes
 
-Aplicatia reprezinta un sistem eficient de gestiune a studentilor si are urmatoarele specificatii:
+The application is an efficient student management system and has the following specifications:
 
--prezinta 2 tipuri de conturi: unul de student si unul de profesor
-Fiecare cont are atribuit un rol pentru a putea executa actiuni.
+-It has 2 types of accounts: one for students and one for teachers Each account has a role assigned to it in order to perform actions.
 
--contul de profesor poate sa gestioneze temele studentilor folosind operatiile CRUD.
-De asemenea o actiune importanta este reprezentata de verificarea studentilor.
-Programul preia din GitHub temele studentilor, le prelucreaza si le verifica intre ele. 
-Astfel profesorul poate vedea cine a copiat, procentul de similaritate cat si codul similar.
+-the teacher account can manage student assignments using CRUD operations. Also an important action is the student verification. The program retrieves student assignments from GitHub, processes them and checks them against each other. This way the teacher can see who copied, the percentage of similarity as well as similar code.
 
--contul de student poate doar sa vizualizeze temele in lucru si sa gestioneze propriul cont
+-the student account can only view assignments in progress and manage their own account
 
--aplicatia are un modul de login+register
-
+-the application has a login+records module
