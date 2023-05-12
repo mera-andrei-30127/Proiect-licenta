@@ -10,4 +10,4 @@ The application is an efficient student management system and has the following 
 
 -the application has a login+records module
 
-- all controller operations use API requests
+-all controller operations use API requests
