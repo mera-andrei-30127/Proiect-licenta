@@ -2,6 +2,8 @@
 
 The application is an efficient student management system and has the following specifications:
 
+-uses C# technology with .NET framework
+
 -It has 2 types of accounts: one for students and one for teachers Each account has a role assigned to it in order to perform actions.
 
 -the teacher account can manage student assignments using CRUD operations. Also an important action is the student verification. The program retrieves student assignments from GitHub, processes them and checks them against each other. This way the teacher can see who copied, the percentage of similarity as well as similar code.
